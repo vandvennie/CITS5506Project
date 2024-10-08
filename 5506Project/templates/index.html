@@ -269,7 +269,10 @@
     <script>
         document.getElementById('123').addEventListener('click',function(){
             fetch('http://172.20.10.4:4444/capture',{method:'GET'})
-                .then(response=> response.json())
+                .then(response=> {
+                    response.json()
+                    
+                })
                 .then(data=>alert(data.sound_status))
                 .then(data=>console.log(data))
                 .catch(err=>console.log(err))
