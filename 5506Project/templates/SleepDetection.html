@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Detection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <style>
+        #canvas {
+            display: none; /* 隐藏画布，因为不需要绘制 */
+        }
+    </style>
+</head>
+<body>
+    <h1>Sleep Detection</h1>
+    <input type="file" id="imageUpload" accept="image/*">
+    <div id="result"></div>
+    <script>
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        let net;
+
+        // 加载 PoseNet 模型
+        async function loadPosenet() {
+            net = await posenet.load();
+            console.log("PoseNet model loaded");
+        }
+
+        // 处理上传的图像
+        document.getElementById('imageUpload').addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = async () => {
+                // 设置画布尺寸
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+
+                // 进行姿态估计
+                const pose = await net.estimateSinglePose(img, {
+                    flipHorizontal: false,
+                });
+
+                // 根据姿态判断状态
+                const status = analyzePose(pose);
+                document.getElementById('result').innerText = `The person is: ${status}`;
+            };
+        });
+
+        // 根据关键点分析姿态
+        function analyzePose(pose) {
+            const keypoints = pose.keypoints;
+
+            // 这里可以根据关键点位置进行简单的判断
+            // 假设如果头部关键点（nose）y坐标大于肩部关键点（leftShoulder）y坐标
+            // 则可能表示人是躺着的，进一步推测为“睡着”
+            const nose = keypoints.find(k => k.part === 'nose');
+            const leftShoulder = keypoints.find(k => k.part === 'leftShoulder');
+
+            if (nose.score > 0.5 && leftShoulder.score > 0.5) {
+                // 检查鼻子是否在肩部的下面
+                if (nose.position.y > leftShoulder.position.y) {
+                    return 'Sleeping';
+                }
+            }
+
+            // 默认返回“醒着”
+            return 'Awake';
+        }
+
+        // 启动程序
+        loadPosenet();
+    </script>
+</body>
+</html>
