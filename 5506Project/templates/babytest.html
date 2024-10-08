@@ -48,10 +48,10 @@
                         const leftEyeOpen = isEyeOpen(leftEye);
                         const rightEyeOpen = isEyeOpen(rightEye);
 
-                        const status = leftEyeOpen && rightEyeOpen ? 'baby is awake' : 'baby is sleep';
+                        const status = 'baby is on bed.' ;
                         document.getElementById('result').innerText = status;
                     } else {
-                        document.getElementById('result').innerText = 'No faces detected';
+                        document.getElementById('result').innerText = 'baby is not at bed.';
                     }
                 };
             });
