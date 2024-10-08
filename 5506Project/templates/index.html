@@ -264,7 +264,34 @@
             </div>
         </div>
     </div>
+    <button id="123">relay</button>
+    <img id="imageElement" alt="图片加载中..." />
+    <script>
+        document.getElementById('123').addEventListener('click',function(){
+            fetch('http://172.20.10.4:4444/capture',{method:'GET'})
+                .then(response=> response.json())
+                .then(data=>alert(data.sound_status))
+                .then(data=>console.log(data))
+                .catch(err=>console.log(err))
+        })
+        document.getElementById('imageElement').addEventListener('click',function(){
+            fetch('http://172.20.10.4:4444/capture')  // 替换为你的图片API URL
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('网络请求失败');
+            }
+            return response.blob();  // 将响应转换为 Blob 对象（二进制数据）
+            })
+            .then(blob => {
+            const imgUrl = URL.createObjectURL(blob);  // 将 Blob 对象转换为一个临时的图片 URL
+            document.getElementById('imageElement').src = imgUrl;  // 设置 img 标签的 src 属性为该 URL
+            })
+            .catch(error => {
+            console.error('获取图片出错:', error);
+            });
+        })
 
+    </script>
     <!-- 图表脚本 -->
     <script>
         // ECharts 图表初始化
