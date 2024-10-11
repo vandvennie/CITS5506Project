@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Cradle Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('../pic/background_header.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding:5%
+        }
+
+        .header {
+            color: black;
+            padding: 3px;
+            text-align: center;
+            div {
+                font-size: 24px;
+                font-weight: bold;
+            }
+        }
+
+        /* 双飞翼布局 */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        /* 左右两侧固定宽度 */
+        .sidebar {
+            flex: 0 0 22%;
+            padding: 10px;
+        }
+
+        /* 中间区域自适应 */
+        .main-content {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        /* 中间的 2x2 网格布局 */
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .funnel {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, #ff6a00, #ffcc99);
+        }
+
+        /* 滚动的 Alert Log 区域 */
+        .alert-log {
+            height: 150px;
+            background-color: white;
+            border: 1px solid #ddd;
+            overflow-y: auto;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .alert-item {
+            border-bottom: 1px solid #ddd;
+            padding: 5px 0;
+        }
+
+        /* Power Switch and Settings */
+        .controls {
+            position: absolute;
+            top: 15px;
+            right: 10%;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-switch {
+            margin-right: 20px;
+        }
+
+        .settings-btn {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .settings-btn i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>Smart Cradle Dashboard</div>
+        <div>Meng Sun</div>
+    </div>
+
+    <!-- Power Switch and Settings -->
+    <div class="controls">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="powerSwitch">
+            <label class="form-check-label" for="powerSwitch">Power</label>
+        </div>
+        <button class="settings-btn" id="settingsBtn">
+            <i class="bi bi-gear-fill"></i>Settings
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- 左侧 User Visit Analysis Section 内容 -->
+        <div class="sidebar">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Average weight changes</h5>
+                    <canvas id="barChart" class="chart"></canvas>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">somethings I like it.</h5>
+                    <canvas class="chart">hello world</canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中间区域 2x2 网格展示 Statistics Section -->
+        <div class="main-content">
+            <div class="statistics-grid">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="card-title">Average temperature</div>
+                        <div class="card-text display-4">3.72</div>
+                    </div>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="card-title">Average weight</div>
+                        <div class="card-text display-4">17.03</div>
+                    </div>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="card-title">Sleep duration</div>
+                        <div class="card-text display-4">7.38</div>
+                    </div>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="card-title">Duration of use</div>
+                        <div class="card-text display-4">6.04</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Log -->
+            <div class="alert-log">
+                <div class="alert-item">Alert 1: Temperature too high!</div>
+                <div class="alert-item">Alert 2: Baby awake!</div>
+                <div class="alert-item">Alert 3: Low battery.</div>
+                <div class="alert-item">Alert 4: Sleep mode activated.</div>
+                <div class="alert-item">Alert 5: Movement detected.</div>
+                <!-- 更多警报日志可在此处添加 -->
+            </div>
+        </div>
+
+        <!-- 右侧 User Visit Analysis Section 内容 -->
+        <div class="sidebar">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Average daily sleep duration</h5>
+                    <canvas class="chart">hello world</canvas>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">somethings I like it.</h5>
+                    <canvas class="chart">hello world</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="sleepSwitch">
+                        <label class="form-check-label" for="sleepSwitch">Sleep</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="awaySwitch">
+                        <label class="form-check-label" for="awaySwitch">Away</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="temperatureSwitch">
+                        <label class="form-check-label" for="temperatureSwitch">Temperature</label>
+                    </div>
+                    <div class="form-inline mt-3">
+                        <div>Room temperature setting:</div>
+                        <div class="d-flex">
+                            <input type="number" class="form-control me-2" id="tempMin" placeholder="Min">
+                            <span>-</span>
+                            <input type="number" class="form-control ms-2" id="tempMax" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="submitSettings">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Bar Chart Example using Chart.js
+        const ctx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['A', 'B', 'C', 'D'],
+                datasets: [{
+                    label: 'W',
+                    data: [6.49, 5.12, 3.78, 2.56],
+                    backgroundColor: ['#ff6a00', '#ffb366', '#ffd966', '#ffed99']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Power Switch Listener
+        const powerSwitch = document.getElementById('powerSwitch');
+        powerSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                alert('Power ON');
+            } else {
+                alert('Power OFF');
+            }
+        });
+
+        // Settings Modal Control
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
+
+        settingsBtn.addEventListener('click', function () {
+            settingsModal.show();
+        });
+
+        // Settings Submit Button
+        const submitSettings = document.getElementById('submitSettings');
+        submitSettings.addEventListener('click', function() {
+            alert('Settings Saved');
+            settingsModal.hide();
+        });
+    </script>
+</body>
+</html>
