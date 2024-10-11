@@ -7,6 +7,10 @@
     <!-- 引入 Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- 引入 ECharts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <style>
         body {
@@ -139,306 +143,389 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="boxcontainer">
-            <div class="box">数据1</div>
-            <div class="box">数据2</div>
-            <div class="box">数据3</div>
-        </div>
-        <!-- 新增的开关和控制按钮布局 -->
+<div class="container">
+    <div class="boxcontainer">
+        <div class="box">数据1</div>
+        <div class="box">数据2</div>
+        <div class="box">数据3</div>
+    </div>
+    <!-- 新增的开关和控制按钮布局 -->
 
 
-        <!-- 原有项目的图表区域 -->
-        <div class="alert alert-warning mt-4" role="alert">
-            A simple light alert with <a href="link for camera" class="alert-link">an example link</a>. Give it a click if you like.
+    <!-- 原有项目的图表区域 -->
+    <div class="alert alert-warning mt-4" role="alert">
+        A simple light alert with <a href="link for camera" class="alert-link">an example link</a>. Give it a click if
+        you like.
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-3 d-flex align-items-center">
+            <label for="chartSelector"><h2>Statistics</h2></label>
         </div>
-        <div class="row mt-4">
-            <div class="col-md-3 d-flex align-items-center">
-                <label for="chartSelector"><h2>Statistics</h2></label>
-            </div>
-            <div class="col-md-3 offset-md-6">
-                <select id="chartSelector" class="form-control">
-                    <option value="weightChart">体重变化</option>
-                    <option value="averageBedTime">平均在床时长</option>
-                    <option value="temperatureChart">房间内温度变化</option>
-                    <option value="recentTemperature">近一小时的房间温度</option>
-                </select>
-            </div>
+        <div class="col-md-3 offset-md-6">
+            <select id="chartSelector" class="form-control">
+                <option value="weightChart">体重变化</option>
+                <option value="averageBedTime">平均在床时长</option>
+                <option value="temperatureChart">房间内温度变化</option>
+                <option value="recentTemperature">近一小时的房间温度</option>
+            </select>
         </div>
+    </div>
 
-        <!-- 图表区 - 体重变化 -->
-        <div class="row mt-4 chart-section" id="weightChart">
-            <div class="col-12">
-                <div class="chart-container">
-                    <div id="weightChartContainer" style="width: 100%; height: 100%;"></div>
-                </div>
-                <button id="weekBtn" class="btn active-btn" onclick="switchWeightData('week')">周数据</button>
-                <button id="monthBtn" class="btn inactive-btn" onclick="switchWeightData('month')">月数据</button>
+    <!-- 图表区 - 体重变化 -->
+    <div class="row mt-4 chart-section" id="weightChart">
+        <div class="col-12">
+            <div class="chart-container">
+                <div id="weightChartContainer" style="width: 100%; height: 100%;"></div>
             </div>
+            <button id="weekBtn" class="btn active-btn" onclick="switchWeightData('week')">周数据</button>
+            <button id="monthBtn" class="btn inactive-btn" onclick="switchWeightData('month')">月数据</button>
         </div>
+    </div>
 
-        <!-- 图表区 - 平均在床时长 -->
-        <div class="row mt-4 chart-section hidden" id="averageBedTime">
-            <div class="col-12">
-                <div class="number-box">
-                    <h2>平均在床时长: <span id="bedTimeData">8小时20分钟</span></h2>
-                </div>
-                <button id="weekBedBtn" class="btn active-btn" onclick="switchBedTimeData('week')">周数据</button>
-                <button id="monthBedBtn" class="btn inactive-btn" onclick="switchBedTimeData('month')">月数据</button>
+    <!-- 图表区 - 平均在床时长 -->
+    <div class="row mt-4 chart-section hidden" id="averageBedTime">
+        <div class="col-12">
+            <div class="number-box">
+                <h2>平均在床时长: <span id="bedTimeData">8小时20分钟</span></h2>
             </div>
+            <button id="weekBedBtn" class="btn active-btn" onclick="switchBedTimeData('week')">周数据</button>
+            <button id="monthBedBtn" class="btn inactive-btn" onclick="switchBedTimeData('month')">月数据</button>
         </div>
+    </div>
 
-        <!-- 图表区 - 房间内温度变化 -->
-        <div class="row mt-4 chart-section hidden" id="temperatureChart">
-            <div class="col-12">
-                <div class="chart-container">
-                    <div id="temperatureChartContainer" style="width: 100%; height: 100%;"></div>
-                </div>
-                <button id="weekTempBtn" class="btn active-btn" onclick="switchTemperatureData('week')">周数据</button>
-                <button id="monthTempBtn" class="btn inactive-btn" onclick="switchTemperatureData('month')">月数据</button>
+    <!-- 图表区 - 房间内温度变化 -->
+    <div class="row mt-4 chart-section hidden" id="temperatureChart">
+        <div class="col-12">
+            <div class="chart-container">
+                <div id="temperatureChartContainer" style="width: 100%; height: 100%;"></div>
             </div>
+            <button id="weekTempBtn" class="btn active-btn" onclick="switchTemperatureData('week')">周数据</button>
+            <button id="monthTempBtn" class="btn inactive-btn" onclick="switchTemperatureData('month')">月数据</button>
         </div>
+    </div>
 
-        <!-- 图表区 - 近一小时的房间温度 -->
-        <div class="row mt-4 chart-section hidden" id="recentTemperature">
-            <div class="col-12">
-                <div class="number-box">
-                    <h2>近一小时的房间温度: <span id="temperatureData">23°C</span></h2>
-                </div>
-                <button id="weekHourTempBtn" class="btn active-btn" onclick="switchTemperatureHourData('week')">周数据</button>
-                <button id="monthHourTempBtn" class="btn inactive-btn" onclick="switchTemperatureHourData('month')">月数据</button>
+    <!-- 图表区 - 近一小时的房间温度 -->
+    <div class="row mt-4 chart-section hidden" id="recentTemperature">
+        <div class="col-12">
+            <div class="number-box">
+                <h2>近一小时的房间温度: <span id="temperatureData">23°C</span></h2>
             </div>
+            <button id="weekHourTempBtn" class="btn active-btn" onclick="switchTemperatureHourData('week')">周数据
+            </button>
+            <button id="monthHourTempBtn" class="btn inactive-btn" onclick="switchTemperatureHourData('month')">月数据
+            </button>
         </div>
-                <div class="row">
-            <!-- 左侧：Switches -->
-            <div class="col-md-6">
-                <div class="box">
-                    <div class="switch-box">
-                        <div class="switch-container">
-                            <label class="switch-label">Power Switch</label>
-                            <label class="switch">
-                                <input type="checkbox" id="powerSwitch">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="switch-box">
-                        <div class="switch-container">
-                            <label class="switch-label">Detector Switch</label>
-                            <label class="switch">
-                                <input type="checkbox" id="detectorSwitch">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
+    </div>
+    <div class="row">
+        <!-- 左侧：Switches -->
+        <div class="col-md-6">
+            <div class="box">
+                <div class="switch-box">
+                    <div class="switch-container">
+                        <label class="switch-label">Power Switch</label>
+                        <label class="switch">
+                            <input type="checkbox" id="powerSwitch">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                 </div>
+                <div class="switch-box">
+                    <div class="switch-container">
+                        <label class="switch-label">Detector Switch</label>
+                        <label class="switch">
+                            <input type="checkbox" id="detectorSwitchOn">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <!-- 右侧：Temperature Setting -->
-            <div class="col-md-6">
-                <div class="box">
-                    <div class="form-inline">
-                        <label for="tempSetting">Room Temperature Setting:</label>
+        <!-- 右侧：Temperature Setting -->
+        <div class="col-md-6">
+            <div class="box">
+                <div class="form-inline">
+                    <div>Room temperature setting:</div>
+                    <div>
                         <input type="number" class="form-control" id="tempMin" placeholder="Min">
                         <span>-</span>
                         <input type="number" class="form-control" id="tempMax" placeholder="Max">
-                        <button class="btn btn-primary ml-2">Submit</button>
+                        <button class="btn btn-primary ml-2" id="temperature_setting_button">Submit</button>
                     </div>
                 </div>
             </div>
+            <!-- 显示保存的数据 -->
+            <p id="output"></p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- 左下：Camera Control Button -->
+        <div class="col-md-6">
+            <div class="box">
+                <button class="btn btn-primary btn-custom" id="camera_control">Camera Control Button</button>
+            </div>
         </div>
 
-        <div class="row mt-4">
-            <!-- 左下：Camera Control Button -->
-            <div class="col-md-6">
-                <div class="box">
-                    <button class="btn btn-primary btn-custom">Camera Control Button</button>
-                </div>
+        <!-- 右下：Photos Button -->
+        <div class="col-md-6">
+            <div class="box">
+                <button class="btn btn-secondary btn-custom" id="pic_show">Photos ></button>
             </div>
-
-            <!-- 右下：Photos Button -->
-            <div class="col-md-6">
-                <div class="box">
-                    <button class="btn btn-secondary btn-custom">Photos ></button>
-                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box">
+                <button class="btn btn-secondary btn-custom" id="babyTest">babytest ></button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box">
+                <button class="btn btn-secondary btn-custom" id="sleepDetection">sleepdetection ></button>
             </div>
         </div>
     </div>
-    <button id="123">relay</button>
-    <img id="imageElement" alt="图片加载中..." />
-    <script>
-        document.getElementById('123').addEventListener('click',function(){
-            fetch('http://172.20.10.4:4444/capture',{method:'GET'})
-                .then(response=> {
-                    response.json()
-                    
-                })
-                .then(data=>alert(data.sound_status))
-                .then(data=>console.log(data))
-                .catch(err=>console.log(err))
-        })
-        document.getElementById('imageElement').addEventListener('click',function(){
-            fetch('http://172.20.10.4:4444/capture')  // 替换为你的图片API URL
-            .then(response => {
-            if (!response.ok) {
-                throw new Error('网络请求失败');
+</div>
+<script>
+    $.get('http://172.20.10.4:4444/temperature/on', function (response) {
+        // 获取成功后的回调，假设 response 是 JSON 数据
+        console.log("API 返回的数据:", response);
+        var data1Formatted = parseFloat(response.object_temperature).toFixed(2);
+        localStorage.setItem('currentTemp',data1Formatted)
+        // 更新 boxcontainer 内的 box 元素内容
+        $('.boxcontainer .box:nth-child(1)').text('Temperature:' + data1Formatted); // 更新数据1
+    })
+        .fail(function (error) {
+            console.error("API 请求失败:", error);
+        });
+    //set the temp range
+    $(document).ready(function () {
+        $('#temperature_setting_button').click(function () {
+            // 获取两个 input 框中的值
+            var tempMin = $('#tempMin').val();
+            var tempMax = $('#tempMax').val();
+            localStorage.setItem('tempMin', tempMin)
+            localStorage.setItem('tempMax', tempMax)
+            var currentData = localStorage.getItem('currentTemp')
+            if(currentData>tempMax || currentData<tempMin){
+                alert('current temp not good')
+
             }
-            return response.blob();  // 将响应转换为 Blob 对象（二进制数据）
+            // 保存数据到对象中
+            var temperatureSettings = {
+                min: tempMin,
+                max: tempMax
+            };
+
+            // 显示保存的数据
+            $('#output').text('温度范围: ' + temperatureSettings.min + ' - ' + temperatureSettings.max);
+
+            // 输出到控制台用于调试
+            console.log(temperatureSettings);
+        });
+    });
+    //sound detector
+    $(document).ready(function () {
+        $('#detectorSwitchOn').click(function () {
+            // 发送GET请求到后端API
+            $.get('http://172.20.10.4:4443/sound/on', function (response) {
+                console.log('后端返回的数据:', response.sound_status);
+                // 根据需要在这里处理服务器的响应
             })
-            .then(blob => {
-            const imgUrl = URL.createObjectURL(blob);  // 将 Blob 对象转换为一个临时的图片 URL
-            document.getElementById('imageElement').src = imgUrl;  // 设置 img 标签的 src 属性为该 URL
+                .fail(function () {
+                    console.error('请求失败');
+                });
+        });
+    });
+    //relay switch
+    $(document).ready(function () {
+        $('#powerSwitch').click(function () {
+            // 发送GET请求到后端API
+            $.get('http://172.20.10.4:4442/clean', function (response) {
+                console.log('后端返回的数据:', response.sound_status);
+                // 根据需要在这里处理服务器的响应
             })
-            .catch(error => {
-            console.error('获取图片出错:', error);
-            });
+                .fail(function () {
+                    console.error('请求失败');
+                });
+        });
+    });
+    //camera control
+    $('#camera_control').click(function () {
+        $.get('https://example.com/api/data', function (data) {
+            console.log("API 请求成功，返回的数据:", data);
+
+            // 将数据转换为字符串并存储到 localStorage
+            localStorage.setItem('serverData', JSON.stringify(data));
+
+            // 从 localStorage 获取数据并解析回对象
+            var storedData = JSON.parse(localStorage.getItem('serverData'));
+            console.log("从 localStorage 获取到的数据:", storedData);
         })
+            .fail(function () {
+                console.error("API 请求失败");
+            });
+    })
+    //pic_show
+    $('#pic_show').click(function() {
+        window.location.href='display.html'
+    })
+    $('#babyTest').click(function() {
+        window.location.href='babytest.html'
+    })
+    $('#sleepDetection').click(function() {
+        window.location.href='sleepDetection.html'
+    })
+</script>
+<!-- 图表脚本 -->
+<script>
+    // ECharts 图表初始化
+    let weightChart = echarts.init(document.getElementById('weightChartContainer'));
+    let temperatureChart = echarts.init(document.getElementById('temperatureChartContainer'));
 
-    </script>
-    <!-- 图表脚本 -->
-    <script>
-        // ECharts 图表初始化
-        let weightChart = echarts.init(document.getElementById('weightChartContainer'));
-        let temperatureChart = echarts.init(document.getElementById('temperatureChartContainer'));
+    // 调整图表大小
+    window.addEventListener('resize', function () {
+        weightChart.resize();
+        temperatureChart.resize();
+    });
 
-        // 调整图表大小
-        window.addEventListener('resize', function() {
+    // 渲染体重图表
+    function renderWeightChart(data) {
+        let option = {
+            title: {text: '体重变化'},
+            xAxis: {type: 'category', data: data.dates},
+            yAxis: {type: 'value'},
+            series: [{data: data.values, type: 'line'}]
+        };
+        weightChart.setOption(option);
+    }
+
+    // 渲染温度图表
+    function renderTemperatureChart(data) {
+        let option = {
+            title: {text: '房间内温度变化'},
+            xAxis: {type: 'category', data: data.dates},
+            yAxis: {type: 'value'},
+            series: [{data: data.values, type: 'line'}]
+        };
+        temperatureChart.setOption(option);
+        temperatureChart.resize();  // 确保图表在显示时正确渲染
+    }
+
+    // 切换体重数据
+    function switchWeightData(range) {
+        let weekBtn = document.getElementById('weekBtn');
+        let monthBtn = document.getElementById('monthBtn');
+
+        if (range === 'week') {
+            weekBtn.classList.add('active-btn');
+            weekBtn.classList.remove('inactive-btn');
+            monthBtn.classList.add('inactive-btn');
+            monthBtn.classList.remove('active-btn');
+            renderWeightChart({
+                dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日'],
+                values: [60, 61, 60.5, 60.2, 61, 61.5, 61]
+            });
+        } else if (range === 'month') {
+            weekBtn.classList.add('inactive-btn');
+            weekBtn.classList.remove('active-btn');
+            monthBtn.classList.add('active-btn');
+            monthBtn.classList.remove('inactive-btn');
+            renderWeightChart({
+                dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'],
+                values: [60, 60.5, 60.8, 61, 61.2, 60.9, 61, 61.3, 60.7, 61]
+            });
+        }
+    }
+
+    // 切换温度数据
+    function switchTemperatureData(range) {
+        let weekTempBtn = document.getElementById('weekTempBtn');
+        let monthTempBtn = document.getElementById('monthTempBtn');
+
+        if (range === 'week') {
+            weekTempBtn.classList.add('active-btn');
+            weekTempBtn.classList.remove('inactive-btn');
+            monthTempBtn.classList.add('inactive-btn');
+            monthTempBtn.classList.remove('active-btn');
+            renderTemperatureChart({
+                dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日'],
+                values: [22.5, 23, 22.8, 23.2, 22.9, 23.3, 23.1]
+            });
+        } else if (range === 'month') {
+            weekTempBtn.classList.add('inactive-btn');
+            weekTempBtn.classList.remove('active-btn');
+            monthTempBtn.classList.add('active-btn');
+            monthTempBtn.classList.remove('inactive-btn');
+            renderTemperatureChart({
+                dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'],
+                values: [22.5, 22.8, 23, 22.9, 23.1, 22.7, 23.2, 22.6, 22.9, 23.3]
+            });
+        }
+    }
+
+    // 切换在床时长数据
+    function switchBedTimeData(range) {
+        let weekBedBtn = document.getElementById('weekBedBtn');
+        let monthBedBtn = document.getElementById('monthBedBtn');
+        let bedTimeData = document.getElementById('bedTimeData');
+
+        if (range === 'week') {
+            weekBedBtn.classList.add('active-btn');
+            weekBedBtn.classList.remove('inactive-btn');
+            monthBedBtn.classList.add('inactive-btn');
+            monthBedBtn.classList.remove('active-btn');
+            bedTimeData.textContent = '8小时20分钟'; // 示例周数据
+        } else if (range === 'month') {
+            weekBedBtn.classList.add('inactive-btn');
+            weekBedBtn.classList.remove('active-btn');
+            monthBedBtn.classList.add('active-btn');
+            monthBedBtn.classList.remove('inactive-btn');
+            bedTimeData.textContent = '7小时45分钟'; // 示例月数据
+        }
+    }
+
+    // 切换近一小时的房间温度数据
+    function switchTemperatureHourData(range) {
+        let weekHourTempBtn = document.getElementById('weekHourTempBtn');
+        let monthHourTempBtn = document.getElementById('monthHourTempBtn');
+        let temperatureData = document.getElementById('temperatureData');
+
+        if (range === 'week') {
+            weekHourTempBtn.classList.add('active-btn');
+            weekHourTempBtn.classList.remove('inactive-btn');
+            monthHourTempBtn.classList.add('inactive-btn');
+            monthHourTempBtn.classList.remove('active-btn');
+            temperatureData.textContent = '23°C'; // 示例周数据
+        } else if (range === 'month') {
+            weekHourTempBtn.classList.add('inactive-btn');
+            weekHourTempBtn.classList.remove('active-btn');
+            monthHourTempBtn.classList.add('active-btn');
+            monthHourTempBtn.classList.remove('inactive-btn');
+            temperatureData.textContent = '22.7°C'; // 示例月数据
+        }
+    }
+
+    // 切换显示的图表
+    document.getElementById('chartSelector').addEventListener('change', function () {
+        let selectedChart = this.value;
+        document.querySelectorAll('.chart-section').forEach(function (section) {
+            section.classList.add('hidden');
+        });
+        document.getElementById(selectedChart).classList.remove('hidden');
+        // 调整图表大小以适应容器
+        if (selectedChart === 'temperatureChart') {
+            setTimeout(() => {
+                temperatureChart.resize();
+            }, 100); // 延迟调用 resize 确保渲染正确
+        } else {
             weightChart.resize();
-            temperatureChart.resize();
-        });
-
-        // 渲染体重图表
-        function renderWeightChart(data) {
-            let option = {
-                title: { text: '体重变化' },
-                xAxis: { type: 'category', data: data.dates },
-                yAxis: { type: 'value' },
-                series: [{ data: data.values, type: 'line' }]
-            };
-            weightChart.setOption(option);
         }
+    });
 
-        // 渲染温度图表
-        function renderTemperatureChart(data) {
-            let option = {
-                title: { text: '房间内温度变化' },
-                xAxis: { type: 'category', data: data.dates },
-                yAxis: { type: 'value' },
-                series: [{ data: data.values, type: 'line' }]
-            };
-            temperatureChart.setOption(option);
-            temperatureChart.resize();  // 确保图表在显示时正确渲染
-        }
-
-        // 切换体重数据
-        function switchWeightData(range) {
-            let weekBtn = document.getElementById('weekBtn');
-            let monthBtn = document.getElementById('monthBtn');
-
-            if (range === 'week') {
-                weekBtn.classList.add('active-btn');
-                weekBtn.classList.remove('inactive-btn');
-                monthBtn.classList.add('inactive-btn');
-                monthBtn.classList.remove('active-btn');
-                renderWeightChart({ dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日'], values: [60, 61, 60.5, 60.2, 61, 61.5, 61] });
-            } else if (range === 'month') {
-                weekBtn.classList.add('inactive-btn');
-                weekBtn.classList.remove('active-btn');
-                monthBtn.classList.add('active-btn');
-                monthBtn.classList.remove('inactive-btn');
-                renderWeightChart({ dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'], values: [60, 60.5, 60.8, 61, 61.2, 60.9, 61, 61.3, 60.7, 61] });
-            }
-        }
-
-        // 切换温度数据
-        function switchTemperatureData(range) {
-            let weekTempBtn = document.getElementById('weekTempBtn');
-            let monthTempBtn = document.getElementById('monthTempBtn');
-
-            if (range === 'week') {
-                weekTempBtn.classList.add('active-btn');
-                weekTempBtn.classList.remove('inactive-btn');
-                monthTempBtn.classList.add('inactive-btn');
-                monthTempBtn.classList.remove('active-btn');
-                renderTemperatureChart({ dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日'], values: [22.5, 23, 22.8, 23.2, 22.9, 23.3, 23.1] });
-            } else if (range === 'month') {
-                weekTempBtn.classList.add('inactive-btn');
-                weekTempBtn.classList.remove('active-btn');
-                monthTempBtn.classList.add('active-btn');
-                monthTempBtn.classList.remove('inactive-btn');
-                renderTemperatureChart({ dates: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'], values: [22.5, 22.8, 23, 22.9, 23.1, 22.7, 23.2, 22.6, 22.9, 23.3] });
-            }
-        }
-
-        // 切换在床时长数据
-        function switchBedTimeData(range) {
-            let weekBedBtn = document.getElementById('weekBedBtn');
-            let monthBedBtn = document.getElementById('monthBedBtn');
-            let bedTimeData = document.getElementById('bedTimeData');
-
-            if (range === 'week') {
-                weekBedBtn.classList.add('active-btn');
-                weekBedBtn.classList.remove('inactive-btn');
-                monthBedBtn.classList.add('inactive-btn');
-                monthBedBtn.classList.remove('active-btn');
-                bedTimeData.textContent = '8小时20分钟'; // 示例周数据
-            } else if (range === 'month') {
-                weekBedBtn.classList.add('inactive-btn');
-                weekBedBtn.classList.remove('active-btn');
-                monthBedBtn.classList.add('active-btn');
-                monthBedBtn.classList.remove('inactive-btn');
-                bedTimeData.textContent = '7小时45分钟'; // 示例月数据
-            }
-        }
-
-        // 切换近一小时的房间温度数据
-        function switchTemperatureHourData(range) {
-            let weekHourTempBtn = document.getElementById('weekHourTempBtn');
-            let monthHourTempBtn = document.getElementById('monthHourTempBtn');
-            let temperatureData = document.getElementById('temperatureData');
-
-            if (range === 'week') {
-                weekHourTempBtn.classList.add('active-btn');
-                weekHourTempBtn.classList.remove('inactive-btn');
-                monthHourTempBtn.classList.add('inactive-btn');
-                monthHourTempBtn.classList.remove('active-btn');
-                temperatureData.textContent = '23°C'; // 示例周数据
-            } else if (range === 'month') {
-                weekHourTempBtn.classList.add('inactive-btn');
-                weekHourTempBtn.classList.remove('active-btn');
-                monthHourTempBtn.classList.add('active-btn');
-                monthHourTempBtn.classList.remove('inactive-btn');
-                temperatureData.textContent = '22.7°C'; // 示例月数据
-            }
-        }
-
-        // 切换显示的图表
-        document.getElementById('chartSelector').addEventListener('change', function() {
-            let selectedChart = this.value;
-            document.querySelectorAll('.chart-section').forEach(function(section) {
-                section.classList.add('hidden');
-            });
-            document.getElementById(selectedChart).classList.remove('hidden');
-            // 调整图表大小以适应容器
-            if (selectedChart === 'temperatureChart') {
-                setTimeout(() => {
-                    temperatureChart.resize();
-                }, 100); // 延迟调用 resize 确保渲染正确
-            } else {
-                weightChart.resize();
-            }
-        });
-
-        // 初始显示体重图表
-        switchWeightData('week');
-    </script>
-
-    <!-- 引入 Bootstrap JS 依赖 -->
+    // 初始显示体重图表
+    switchWeightData('week');
+</script>
 
 
-    <!-- 引入 Bootstrap JS 依赖 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
