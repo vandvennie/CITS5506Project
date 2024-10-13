@@ -1,0 +1,355 @@
+body {
+    background-image: url('../pic/background_header.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    overflow: hidden;   
+}
+
+.header {
+    color: #46A9E6;
+    padding: 3px;
+    text-align: center;
+    margin-bottom:6px;
+    div {
+        font-size: 35px;
+        font-weight: bold;
+        margin: 10px;
+    }
+}
+
+/* 双飞翼布局 */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
+    max-width: 1920px;
+}
+
+/* 左右两侧固定宽度 */
+.sidebar {
+    flex: 0 0 22%;
+}
+
+.sidebar .card {
+    margin-bottom: 8px;
+    height: 31%;
+}
+
+/* 中间区域自适应 */
+.main-content {
+    flex: 1;
+    padding: 0 10px;
+}
+
+/* 中间的 4x1 网格布局 */
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    font-size: 14px;
+    color: #08486f;
+}
+
+.card {
+    border: 0px;
+}
+
+.card.shadow-sm {
+    background-color: #9ED3F3;
+}
+.card.shadow-sm {
+    .card-title {
+        height: 50px;       
+    }
+}
+.card-title {
+    font-weight: bold;
+}
+
+.card-text.display-4 {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+/* 滚动的 Alert 区域 */
+.alert {
+    height: 60px;
+    background-color: white;
+    border: 0px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* 隐藏滚动条 */
+    padding: 10px;
+    margin-top: 20px;
+    position: relative;
+    font-size: 24px;
+    display:;
+}
+.alert_words{
+    position: absolute;
+    width: 100%;
+    white-space: nowrap;
+    animation: scroll_alert 15s linear infinite; /* 轮播动画 */
+}
+
+@keyframes scroll_alert {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: -100%; /* 根据内容长度调整 */
+    }
+}
+
+.alert_display{
+    display:none;
+    height: 60px;
+    border: 0px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* 隐藏滚动条 */
+    padding: 10px;
+    margin-top: 20px;
+    position: relative;
+    font-size: 24px;
+    background-color: red;
+    white-space: nowrap;
+    animation: scroll_alert_alarm 2s linear infinite; /* 轮播动画 */
+}
+
+@keyframes scroll_alert_alarm {
+    0% {
+        background-color: red;
+    }
+    50% {
+        background-color: white;
+    }
+    100% {
+        background-color: red;
+    }
+}
+
+
+
+/* 滚动的 Alert Log 区域 */
+.alert-log {
+    height: 400px;
+    background-color: white;
+    border: 0px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* 隐藏滚动条 */
+    padding: 10px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.alert_header{
+    height:60px;
+    font-size: 24px;
+    padding-top:12px;
+    font-weight: bold;
+    border-bottom:1px solid grey;
+}
+
+.alert-dia{
+    height: 300px;
+    overflow: hidden; /* 隐藏滚动条 */
+    position: relative;
+}
+
+.alert-items {
+    position: absolute;
+    width: 100%;
+    animation: scroll 300s linear infinite; /* 轮播动画 */
+    /* margin-top: 90px; */
+}
+@keyframes scroll {
+    0% {
+        top: 0;
+    }
+    19% {
+        top: 0;
+    }
+    20% {
+        top:-300px
+    }
+    39% {
+        top:-300px
+    }
+    40%{
+        top:calc(-300px*2)
+    }
+    59%{
+        top:calc(-300px*2)
+    }
+    60%{
+        top:calc(-300px*3)
+    }
+    79%{
+        top:calc(-300px*3)
+    }
+    80%{
+        top:calc(-300px*4)
+    }
+    99%{
+        top:calc(-300px*4)
+    }
+    100% {
+        top: 0; /* 根据内容长度调整 */
+    }
+}
+
+.alert-item {
+    align-items: center;
+    padding: 10px 0;
+    height: 300px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Power Switch and Settings */
+.controls {
+    position: absolute;
+    top: 10px;
+    right: 28%;
+    align-items: center;
+    z-index:1;
+}
+
+.form-switch {
+    margin-right: 20px;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    background-color: #46A9E6;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.settings-btn i {
+    margin-right: 8px;
+}
+
+.custom-alert {
+    position: absolute;
+    top: 20px;
+    z-index: 1;
+    left: 50%;
+    display: block;
+}
+
+.sidebar{
+    .card-body{
+        .settings-btn{
+            display: inline;
+            position: relative;
+            float: right;
+        }
+        .chart{
+            width: 100%;
+            height: 85%;
+            position: relative;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;  
+                object-position: center; 
+                display: block; 
+            }
+        }
+        span{
+            font-size: 16px;
+            height: 16px;
+            bottom: 8px;
+            position: absolute;
+        }
+    }
+
+}
+
+.no-padding{
+    padding-bottom: 0px;
+}
+
+.card-body{
+    .chart{
+        padding:2px;
+    }
+}
+.card-chart{
+    padding:2%;
+}
+.right{
+    .card-body{
+
+        .img_chart {
+            width: 100%;
+            height: 62%;
+            position: relative;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;  
+                object-position: center; 
+                display: block; 
+            }
+        }
+    }
+}
+
+.form-input {
+    width: 100%;
+
+  label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+    display: inline-block;
+    width:20%;
+  }
+
+  input {
+    display: inline;
+    width: 50%;
+    height: 30px;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 聚焦时的样式 */
+  input:focus {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.25);
+  }
+
+  /* 悬停时的样式 */
+  input:hover {
+    border-color: #666;
+  }
+  button{
+    float: right;
+  }
+}
+.switch{
+    width: 100%;
+    height:81px;
+}
+.modal{
+    .form-switch{
+        float: left;
+        margin-top: 8%;
+        margin-bottom: 8%;
+    }
+}
