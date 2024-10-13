@@ -10,12 +10,29 @@
         #canvas {
             display: none; /* 隐藏画布，因为不需要绘制 */
         }
+
+        #uploadedImage {
+            max-width: 100%; /* 确保图片不会超出页面宽度 */
+            margin-top: 10px;
+            cursor: pointer; /* 鼠标悬停时显示手型指针 */
+        }
+
+        input[type="file"] {
+            display: none; /* 隐藏上传文件输入框 */
+        }
     </style>
 </head>
 <body>
     <h1>Sleep Detection</h1>
+    
+    <!-- 隐藏的文件上传输入框 -->
     <input type="file" id="imageUpload" accept="image/*">
+
+    <!-- 显示上传的图片，并支持点击上传 -->
+    <img id="uploadedImage" src="" alt="Click to upload an image">
+
     <div id="result"></div>
+
     <script>
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
@@ -27,11 +44,16 @@
             console.log("PoseNet model loaded");
         }
 
+        // 点击图片时，触发文件上传输入框
+        document.getElementById('uploadedImage').addEventListener('click', () => {
+            document.getElementById('imageUpload').click();
+        });
+
         // 处理上传的图像
         document.getElementById('imageUpload').addEventListener('change', async (event) => {
             const file = event.target.files[0];
-            const img = new Image();
-            img.src = URL.createObjectURL(file);
+            const img = document.getElementById('uploadedImage');
+            img.src = URL.createObjectURL(file); // 显示上传的图片
 
             img.onload = async () => {
                 // 设置画布尺寸
@@ -54,20 +76,15 @@
         function analyzePose(pose) {
             const keypoints = pose.keypoints;
 
-            // 这里可以根据关键点位置进行简单的判断
-            // 假设如果头部关键点（nose）y坐标大于肩部关键点（leftShoulder）y坐标
-            // 则可能表示人是躺着的，进一步推测为“睡着”
+            // 如果头部关键点（nose）y坐标大于肩部关键点（leftShoulder）y坐标，则可能为“睡着”
             const nose = keypoints.find(k => k.part === 'nose');
             const leftShoulder = keypoints.find(k => k.part === 'leftShoulder');
 
             if (nose.score > 0.5 && leftShoulder.score > 0.5) {
-                // 检查鼻子是否在肩部的下面
                 if (nose.position.y > leftShoulder.position.y) {
                     return 'Sleeping';
                 }
             }
-
-            // 默认返回“醒着”
             return 'Awake';
         }
 
