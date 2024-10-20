@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const twilio = require('twilio');
 
-const accountSid = 'x';  // 替换为你的 Twilio SID
-const authToken = 'x';    // 替换为你的 Twilio Auth Token
+const accountSid = '';  
+const authToken = '';   
 const client = twilio(accountSid, authToken);
 
 const app = express();
@@ -15,14 +15,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// 发送 SMS 的路由
+// send SMS 
 app.post('/send-sms', (req, res) => {
     const { to, message } = req.body;
 
     client.messages
         .create({
             body: message,
-            from: '+19093475842',  // 替换为你的 Twilio 号码
+            from: '',  
             to: to
         })
         .then(message => res.json({ sid: message.sid }))

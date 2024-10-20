@@ -1,5 +1,5 @@
-const accountSid = 'xxx';  // 替换为你的 Twilio SID
-const authToken = 'xxx';    // 替换为你的 Twilio Auth Token
+const accountSid = '';  
+const authToken = '';  
 const client = require('twilio')(accountSid, authToken);
 
 export function sendSMS(to, message) {
@@ -12,6 +12,3 @@ export function sendSMS(to, message) {
     .then(message => console.log(`Message sent: ${message.sid}`))
     .catch(error => console.error('Error sending SMS:', error));
 }
-
-// 示例调用
-sendSMS('+xxxx', 'Hello from Twilio!');
